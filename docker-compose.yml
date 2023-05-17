@@ -5,13 +5,13 @@ services:
         networks:
             - wheel
         ports:
-            - '0.0.0.0:80:80'
+            - '0.0.0.0:70:70'
     k6:
         image: loadimpact/k6:latest
         volumes:
           - ./Tests:/Tests
         environment:
-          - HOSTING=http://0.0.0.0:80:80
+          - HOSTING=http://0.0.0.0:70:70
         command: run /Tests/K6Tests.js
 networks:
     wheel: 
