@@ -1,0 +1,18 @@
+version: "2"
+services: 
+    API:
+        image: radonapi
+        networks:
+            - wheel
+        ports:
+            - '0.0.0.0:80:80'
+    k6:
+        image: loadimpact/k6:latest
+        volumes:
+          - ./Tests:/Tests
+        environment:
+          - HOSTING=http://0.0.0.0:80:80
+        command: run /Tests/K6Tests.js
+networks:
+    wheel: 
+        driver: bridge
