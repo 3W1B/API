@@ -14,6 +14,4 @@ public partial class Log
     public virtual ICollection<LogInside> LogInsides { get; set; } = new List<LogInside>();
 
     public virtual ICollection<LogOutside> LogOutsides { get; set; } = new List<LogOutside>();
-
-    public virtual RadonLogger? RadonLogger { get; set; }
 }

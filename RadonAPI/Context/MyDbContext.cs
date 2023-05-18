@@ -60,9 +60,7 @@ public partial class MyDbContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("timestamp");
 
-            entity.HasOne(d => d.RadonLogger).WithMany(p => p.Logs)
-                .HasForeignKey(d => d.RadonLoggerId)
-                .HasConstraintName("FK__Log__radonLogger__5EBF139D");
+   
         });
 
         modelBuilder.Entity<LogInside>(entity =>
@@ -77,9 +75,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Radon).HasColumnName("radon");
             entity.Property(e => e.Temperature).HasColumnName("temperature");
 
-            entity.HasOne(d => d.Log).WithMany(p => p.LogInsides)
-                .HasForeignKey(d => d.LogId)
-                .HasConstraintName("FK__LogInside__logId__6477ECF3");
         });
 
         modelBuilder.Entity<LogOutside>(entity =>
@@ -93,9 +88,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.LogId).HasColumnName("logId");
             entity.Property(e => e.Temperature).HasColumnName("temperature");
 
-            entity.HasOne(d => d.Log).WithMany(p => p.LogOutsides)
-                .HasForeignKey(d => d.LogId)
-                .HasConstraintName("FK__LogOutsid__logId__619B8048");
         });
 
         modelBuilder.Entity<RadonLogger>(entity =>
