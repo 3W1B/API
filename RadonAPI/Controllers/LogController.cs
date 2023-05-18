@@ -13,6 +13,8 @@ public class LogController : ControllerBase
 {
     private MyDbContext _context = new();
 
+    [HttpPost]
+    [Route(nameof(Create))]
     public async Task<CustomResponse> Create()
     {
         CustomResponse? customResponse = null;
@@ -35,9 +37,9 @@ public class LogController : ControllerBase
         return new CustomResponse("success", "Log created", log);
     }
    
-    /**
-     * Returns all logs in a 24 hour period
-     */
+   
+    [HttpPost]
+    [Route(nameof(ReadAll))]
     public async Task<CustomResponse> ReadAll()
     {
         CustomResponse? customResponse = null;
