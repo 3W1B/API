@@ -12,6 +12,4 @@ public partial class LogOutside
     public double? Temperature { get; set; }
 
     public double? Humidity { get; set; }
-
-    public virtual Log? Log { get; set; }
 }

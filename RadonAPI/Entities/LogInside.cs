@@ -14,6 +14,4 @@ public partial class LogInside
     public double? Humidity { get; set; }
 
     public double? Radon { get; set; }
-
-    public virtual Log? Log { get; set; }
 }
