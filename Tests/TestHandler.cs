@@ -40,6 +40,6 @@ public abstract class TestHandler
         
         Console.WriteLine(response["status"]!.ToString());
         Console.WriteLine(response["message"]!.ToString());
-        Console.WriteLine(response["data"]!.ToString());
+        Console.WriteLine(response["data"]!.ToString()[..300]+"...");
     }
 }
