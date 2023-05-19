@@ -26,6 +26,10 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<RadonLogger> RadonLoggers { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserRadonLogger> UserRadonLoggers { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Server=radon3w1b.database.windows.net;database=radon3w1b;user id=radon3w1b@radon3w1b;password=P@ssword123++;trusted_connection=true;TrustServerCertificate=True;integrated security=false;");
@@ -59,8 +63,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Timestamp)
                 .HasColumnType("datetime")
                 .HasColumnName("timestamp");
-
-   
         });
 
         modelBuilder.Entity<LogInside>(entity =>
@@ -74,7 +76,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.LogId).HasColumnName("logId");
             entity.Property(e => e.Radon).HasColumnName("radon");
             entity.Property(e => e.Temperature).HasColumnName("temperature");
-
         });
 
         modelBuilder.Entity<LogOutside>(entity =>
@@ -87,7 +88,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Humidity).HasColumnName("humidity");
             entity.Property(e => e.LogId).HasColumnName("logId");
             entity.Property(e => e.Temperature).HasColumnName("temperature");
-
         });
 
         modelBuilder.Entity<RadonLogger>(entity =>
@@ -97,13 +97,52 @@ public partial class MyDbContext : DbContext
             entity.ToTable("RadonLogger");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Ip)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("ip");
             entity.Property(e => e.Password)
                 .IsUnicode(false)
                 .HasColumnName("password");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83FBE89DB2E");
+
+            entity.ToTable("User");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email)
+                .HasMaxLength(50)
+                .HasColumnName("email");
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(50)
+                .HasColumnName("firstName");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(50)
+                .HasColumnName("lastName");
+            entity.Property(e => e.Password).HasColumnName("password");
+            entity.Property(e => e.Phone)
+                .HasMaxLength(50)
+                .HasColumnName("phone");
+        });
+
+        modelBuilder.Entity<UserRadonLogger>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__UserRado__3213E83FC72D1366");
+
+            entity.ToTable("UserRadonLogger");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
+            entity.Property(e => e.UserId).HasColumnName("userId");
+
+            entity.HasOne(d => d.RadonLogger).WithMany(p => p.UserRadonLoggers)
+                .HasForeignKey(d => d.RadonLoggerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UserRadon__radon__6D0D32F4");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserRadonLoggers)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UserRadon__userI__6C190EBB");
         });
 
         OnModelCreatingPartial(modelBuilder);
