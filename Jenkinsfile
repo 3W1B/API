@@ -18,6 +18,8 @@ pipeline
 
 				dir("Tests")
 				{
+					sh "rm -rf K6Reports/"
+					sh "mkdir K6Reports"
 					sh "rm -rf TestResults/"
 				}
 
