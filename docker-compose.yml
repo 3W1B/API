@@ -6,27 +6,6 @@ services:
             - wheel
         ports:
             - '5001:80'
-    k6stress:
-        image: loadimpact/k6:latest
-        volumes:
-          - ./Tests:/Tests
-        environment:
-          - HOSTING=http://0.0.0.0:5001:80
-        command: run /Tests/K6StressTest.js
-    k6soak:
-        image: loadimpact/k6:latest
-        volumes:
-          - ./Tests:/Tests
-        environment:
-          - HOSTING=http://0.0.0.0:5001:80
-        command: run /Tests/K6SoakTest.js
-    k6load:
-        image: loadimpact/k6:latest
-        volumes:
-          - ./Tests:/Tests
-        environment:
-          - HOSTING=http://0.0.0.0:5001:80
-        command: run /Tests/K6LoadTest.js
 networks:
     wheel: 
         driver: bridge
