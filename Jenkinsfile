@@ -20,6 +20,7 @@ pipeline
 				{
 					sh "rm -rf K6Reports/"
 					sh "mkdir K6Reports"
+					sh "chmod -R 777 K6Reports"
 					sh "rm -rf TestResults/"
 				}
 
