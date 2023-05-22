@@ -69,6 +69,10 @@ pipeline
 				sh "docker-compose down"
 				sh "docker-compose up -d"
 				
+				sh "docker run --rm -v $(pwd)/Tests:/Tests -e HOSTING=http://0.0.0.0:5001:80 loadimpact/k6:latest run /Tests/K6StressTest.js"
+				sh "docker run --rm -v $(pwd)/Tests:/Tests -e HOSTING=http://0.0.0.0:5001:80 loadimpact/k6:latest run /Tests/K6SoakTest.js"
+				sh "docker run --rm -v $(pwd)/Tests:/Tests -e HOSTING=http://0.0.0.0:5001:80 loadimpact/k6:latest run /Tests/K6LoadTest.js"
+				
 				archiveArtifacts "Tests/K6Reports/**/*"
 				
 				echo "DEPLOYMENT COMPLETED"
