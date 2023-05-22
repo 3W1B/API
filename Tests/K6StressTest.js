@@ -24,6 +24,7 @@ export default function () {
     headers: { 'Content-Type': 'application/json' },
   });
   const checkSuccess = check(res, { 'Logger Read Success': (r) => r.status === 200 });
+  if (!checkSuccess) fail('Logger Read Failed');
 }
 
 export function handleSummary(data) {
