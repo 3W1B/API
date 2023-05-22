@@ -62,19 +62,4 @@ public abstract class LogRequest
     
         return log;
     }
-    
-    public static Log? ReadAll(dynamic body, out CustomResponse? customResponse)
-    {
-        if (ParameterHandler.IsNull(body.radonLoggerId))
-        {
-            customResponse = new CustomResponse("error", "Radon logger id is null");
-            return null;
-        }
-        
-        customResponse = null;
-        return new Log
-        {
-            RadonLoggerId = int.Parse(body.radonLoggerId.ToString()),
-        };
-    }
 }

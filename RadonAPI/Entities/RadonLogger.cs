@@ -12,6 +12,4 @@ public partial class RadonLogger
     public virtual ICollection<Location> Locations { get; set; } = new List<Location>();
 
     public virtual ICollection<Log> Logs { get; set; } = new List<Log>();
-
-    public virtual ICollection<UserRadonLogger> UserRadonLoggers { get; set; } = new List<UserRadonLogger>();
 }
