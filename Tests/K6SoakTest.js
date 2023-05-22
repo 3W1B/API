@@ -28,6 +28,6 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        "Tests/K6Reports/SoakTestSummary.html": htmlReport(data),
+        "/Tests/K6Reports/SoakTestSummary.html": htmlReport(data),
     };
 }
