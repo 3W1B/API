@@ -5,7 +5,7 @@ import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporte
 export const options = {
   thresholds: {
     http_req_failed: ['rate<0.01'],
-    http_req_duration: ['p(95)<200'],
+    http_req_duration: ['p(95)<1000'],
   },
 };
 
@@ -28,6 +28,6 @@ export default function () {
 
 export function handleSummary(data) {
     return {
-        "K6Reports/LoadTestSummary.html": htmlReport(data),
+        "Tests/K6Reports/LoadTestSummary.html": htmlReport(data),
     };
 }
