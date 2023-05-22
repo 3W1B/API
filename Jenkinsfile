@@ -69,6 +69,8 @@ pipeline
 				sh "docker-compose down"
 				sh "docker-compose up -d"
 				
+				archiveArtifacts "Tests/K6Reports/**/*"
+				
 				echo "DEPLOYMENT COMPLETED"
 			}
 		}
