@@ -32,17 +32,4 @@ public class LogTests
         
         await TestHandler.Run(body, Expect.Success, logController, logController.Create);
     }
-
-    [Test]
-    public async Task ReadAll()
-    {
-        var body = new Dictionary<string, dynamic>
-        {
-            { "radonLoggerId", 1 },
-        };
-        
-        LogController logController = new();
-        
-        await TestHandler.Run(body, Expect.Success, logController, logController.ReadAll);
-    }
 }

@@ -12,6 +12,4 @@ public partial class Location
     public double? Latitude { get; set; }
 
     public double? Longitude { get; set; }
-
-    public virtual RadonLogger? RadonLogger { get; set; }
 }

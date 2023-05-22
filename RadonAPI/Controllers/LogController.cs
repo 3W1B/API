@@ -11,7 +11,7 @@ namespace RadonAPI.Controllers;
 [Route("[controller]")]
 public class LogController : ControllerBase
 {
-    private MyDbContext _context = new();
+    private readonly MyDbContext _context = new();
 
     [HttpPost]
     [Route(nameof(Create))]
@@ -20,7 +20,7 @@ public class LogController : ControllerBase
         CustomResponse? customResponse = null;
         LogInside? logInside = null;
         LogOutside? logOutside = null;
-        var log = await Validator.Body<Log>(Request.Body, d => LogRequest.Create(d, out customResponse, out logInside, out logOutside));
+        var log = await BodyHandler.Convert<Log>(Request.Body, d => LogRequest.Create(d, out customResponse, out logInside, out logOutside));
         if (customResponse is not null)
             return customResponse;
         
@@ -35,34 +35,5 @@ public class LogController : ControllerBase
         await _context.SaveChangesAsync();
         
         return new CustomResponse("success", "Log created", log);
-    }
-   
-   
-    [HttpPost]
-    [Route(nameof(ReadAll))]
-    public async Task<CustomResponse> ReadAll()
-    {
-        CustomResponse? customResponse = null;
-        var log = await Validator.Body<Log>(Request.Body, d => LogRequest.ReadAll(d, out customResponse));
-        if (customResponse is not null)
-            return customResponse;
-
-        var logs = from l in _context.Logs
-            where l.RadonLoggerId == log!.RadonLoggerId && l.Timestamp > DateTime.Now.AddDays(-1)
-            select l;
-        
-        if (!await logs.AnyAsync())
-            return new CustomResponse("error", "No logs found");
-        
-        foreach (var l in logs)
-        {
-            _context = new MyDbContext();
-            LogInside? logInside = await _context.LogInsides.FirstOrDefaultAsync(l => l.LogId == l.Id);
-            LogOutside? logOutside = await _context.LogOutsides.FirstOrDefaultAsync(l => l.LogId == l.Id);
-            l.LogInsides.Add(logInside);
-            l.LogOutsides.Add(logOutside);
-        }
-
-        return new CustomResponse("success", "Logs found", await logs.ToListAsync());
     }
 }

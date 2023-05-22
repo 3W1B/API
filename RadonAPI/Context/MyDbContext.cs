@@ -46,10 +46,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Latitude).HasColumnName("latitude");
             entity.Property(e => e.Longitude).HasColumnName("longitude");
             entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
-
-            entity.HasOne(d => d.RadonLogger).WithMany(p => p.Locations)
-                .HasForeignKey(d => d.RadonLoggerId)
-                .HasConstraintName("FK__Location__radonL__6754599E");
         });
 
         modelBuilder.Entity<Log>(entity =>
@@ -133,16 +129,6 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
             entity.Property(e => e.UserId).HasColumnName("userId");
-
-            entity.HasOne(d => d.RadonLogger).WithMany(p => p.UserRadonLoggers)
-                .HasForeignKey(d => d.RadonLoggerId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__UserRadon__radon__6D0D32F4");
-
-            entity.HasOne(d => d.User).WithMany(p => p.UserRadonLoggers)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__UserRadon__userI__6C190EBB");
         });
 
         OnModelCreatingPartial(modelBuilder);
