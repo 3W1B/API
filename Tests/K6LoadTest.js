@@ -17,13 +17,13 @@ export const stages = [
 
 export default function () {
     const data = { id: 1 };
-    let res = http.post(`http://${__ENV.HOSTING}/log/readall`, JSON.stringify(data),
+    let res = http.post(`http://${__ENV.HOSTING}/radonlogger/read`, JSON.stringify(data),
         {
             headers: { 'Content-Type': 'application/json' }
         }
     );
-    const checkSuccess = check(res, { 'Task Read Success': (r) => r.status === 200 });
-    if (!checkSuccess) fail('Task Read Failed');
+    const checkSuccess = check(res, { 'Logger Read Success': (r) => r.status === 200 });
+    if (!checkSuccess) fail('Logger Read Failed');
 }
 
 export function handleSummary(data) {
