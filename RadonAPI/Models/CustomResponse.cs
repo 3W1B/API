@@ -1,6 +1,6 @@
 ﻿namespace RadonAPI.Models;
 
-public class CustomResponse : Dictionary<string,dynamic>
+public class CustomResponse : Dictionary<string, dynamic>
 {
     public CustomResponse(string status, string message, object? data = null)
     {

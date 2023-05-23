@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace RadonAPI.Entities;
 
-namespace RadonAPI.Entities;
-
-public partial class User
+public class User
 {
     public int Id { get; set; }
 
@@ -17,5 +14,5 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public virtual ICollection<UserRadonLogger> UserRadonLoggers { get; set; } = new List<UserRadonLogger>();
+    public virtual ICollection<UserLogger> UserLoggers { get; set; } = new List<UserLogger>();
 }

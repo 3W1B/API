@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace RadonAPI.Entities;
 
-namespace RadonAPI.Entities;
-
-public partial class Location
+public class Location
 {
     public int Id { get; set; }
 
-    public int? RadonLoggerId { get; set; }
+    public string? LoggerId { get; set; }
 
-    public double? Latitude { get; set; }
+    public double Latitude { get; set; }
 
-    public double? Longitude { get; set; }
+    public double Longitude { get; set; }
 }

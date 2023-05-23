@@ -5,15 +5,14 @@ namespace Tests;
 
 public class UserTests
 {
-    private readonly string _randomEmail = $"{Guid.NewGuid()}@gmail.com";
-    private readonly string _randomPhone = $"{Guid.NewGuid()}";
-    private readonly string _randomPassword = $"{Guid.NewGuid()}";
-    
-    private int _userId;
-    
     private readonly MyDbContext _context = new();
-    
-    
+    private readonly string _randomEmail = $"{Guid.NewGuid()}@gmail.com";
+    private readonly string _randomPassword = $"{Guid.NewGuid()}";
+    private readonly string _randomPhone = $"{Guid.NewGuid()}";
+
+    private int _userId;
+
+
     [Test]
     [Order(1)]
     public async Task Register()
@@ -26,12 +25,12 @@ public class UserTests
             { "phone", _randomPhone },
             { "password", _randomPassword }
         };
-        
+
         UserController userController = new();
-        
+
         await TestHandler.Run(body, Expect.Success, userController, userController.Register);
     }
-    
+
     [Test]
     [Order(2)]
     public async Task Login()
@@ -41,14 +40,14 @@ public class UserTests
             { "email", _randomEmail },
             { "password", _randomPassword }
         };
-        
+
         UserController userController = new();
 
         await TestHandler.Run(body, Expect.Success, userController, userController.Login);
-        
+
         _userId = _context.Users.FirstOrDefault(u => u.Email == _randomEmail)!.Id;
     }
-    
+
     [Test]
     [Order(3)]
     public async Task AddLogger()
@@ -56,12 +55,12 @@ public class UserTests
         var body = new Dictionary<string, dynamic>
         {
             { "userId", _userId },
-            { "radonLoggerId", 1 },
-            { "radonLoggerPassword", "testpassword" }
+            { "loggerId", "testid" },
+            { "loggerPassword", "testpassword" }
         };
-        
+
         UserController userController = new();
-        
+
         await TestHandler.Run(body, Expect.Success, userController, userController.AddLogger);
     }
 }
