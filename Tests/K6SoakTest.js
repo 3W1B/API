@@ -17,7 +17,7 @@ export const stages = [
 
 export default function () {
     const data = { id: 1 };
-    let res = http.post(`${__ENV.HOSTING}/radonlogger/read`, JSON.stringify(data),
+    let res = http.post(`${__ENV.HOSTING}/logger/read`, JSON.stringify(data),
         {
             headers: { 'Content-Type': 'application/json' }
         }

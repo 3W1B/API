@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-
-namespace RadonAPI.Utils;
+﻿namespace RadonAPI.Utils;
 
 public abstract class ParameterHandler
 {

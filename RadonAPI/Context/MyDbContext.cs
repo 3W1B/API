@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RadonAPI.Entities;
 
 namespace RadonAPI.Context;
@@ -24,38 +22,45 @@ public partial class MyDbContext : DbContext
 
     public virtual DbSet<LogOutside> LogOutsides { get; set; }
 
-    public virtual DbSet<RadonLogger> RadonLoggers { get; set; }
+    public virtual DbSet<Logger> Loggers { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
-    public virtual DbSet<UserRadonLogger> UserRadonLoggers { get; set; }
+    public virtual DbSet<UserLogger> UserLoggers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=radon3w1b.database.windows.net;database=radon3w1b;user id=radon3w1b@radon3w1b;password=P@ssword123++;trusted_connection=true;TrustServerCertificate=True;integrated security=false;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer(
+            "Server=radon3w1b.database.windows.net;database=radon3w1b;user id=radon3w1b@radon3w1b;password=P@ssword123++;trusted_connection=true;TrustServerCertificate=True;integrated security=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Location__3213E83F27CE33BE");
+            entity.HasKey(e => e.Id).HasName("PK__Location__3213E83F43CE18C1");
 
             entity.ToTable("Location");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Latitude).HasColumnName("latitude");
+            entity.Property(e => e.LoggerId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("loggerId");
             entity.Property(e => e.Longitude).HasColumnName("longitude");
-            entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
         });
 
         modelBuilder.Entity<Log>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Log__3213E83F6BDD0119");
+            entity.HasKey(e => e.Id).HasName("PK__Log__3213E83FF52678B3");
 
             entity.ToTable("Log");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
+            entity.Property(e => e.LoggerId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("loggerId");
             entity.Property(e => e.Timestamp)
                 .HasColumnType("datetime")
                 .HasColumnName("timestamp");
@@ -63,7 +68,7 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<LogInside>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LogInsid__3213E83FEA25AFC8");
+            entity.HasKey(e => e.Id).HasName("PK__LogInsid__3213E83FB608B70A");
 
             entity.ToTable("LogInside");
 
@@ -76,7 +81,7 @@ public partial class MyDbContext : DbContext
 
         modelBuilder.Entity<LogOutside>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__LogOutsi__3213E83F449DFAAA");
+            entity.HasKey(e => e.Id).HasName("PK__LogOutsi__3213E83F9D155028");
 
             entity.ToTable("LogOutside");
 
@@ -86,48 +91,62 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Temperature).HasColumnName("temperature");
         });
 
-        modelBuilder.Entity<RadonLogger>(entity =>
+        modelBuilder.Entity<Logger>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__RadonLog__3213E83F759EAEF5");
+            entity.HasKey(e => e.Id).HasName("PK__Logger__3213E83F5887F941");
 
-            entity.ToTable("RadonLogger");
+            entity.ToTable("Logger");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("id");
             entity.Property(e => e.Password)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("password");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3213E83FBE89DB2E");
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F1476B331");
 
             entity.ToTable("User");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("email");
             entity.Property(e => e.FirstName)
                 .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("firstName");
             entity.Property(e => e.LastName)
                 .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("lastName");
-            entity.Property(e => e.Password).HasColumnName("password");
+            entity.Property(e => e.Password)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("password");
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("phone");
         });
 
-        modelBuilder.Entity<UserRadonLogger>(entity =>
+        modelBuilder.Entity<UserLogger>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UserRado__3213E83FC72D1366");
+            entity.HasKey(e => e.Id).HasName("PK__UserLogg__3213E83FAF8B5BD7");
 
-            entity.ToTable("UserRadonLogger");
+            entity.ToTable("UserLogger");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.RadonLoggerId).HasColumnName("radonLoggerId");
+            entity.Property(e => e.LoggerId)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("loggerId");
             entity.Property(e => e.UserId).HasColumnName("userId");
         });
 

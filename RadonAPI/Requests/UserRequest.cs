@@ -13,31 +13,31 @@ public abstract class UserRequest
             customResponse = new CustomResponse("error", "First name is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(data.lastName))
         {
             customResponse = new CustomResponse("error", "Last name is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(data.email))
         {
             customResponse = new CustomResponse("error", "Email is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(data.phone))
         {
             customResponse = new CustomResponse("error", "Phone number is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(data.password))
         {
             customResponse = new CustomResponse("error", "Password is null");
             return null;
         }
-        
+
         customResponse = null;
         return new User
         {
@@ -45,10 +45,10 @@ public abstract class UserRequest
             LastName = data.lastName,
             Email = data.email,
             Phone = data.phone,
-            Password = BCrypt.Net.BCrypt.EnhancedHashPassword(data.password.ToString()),
+            Password = BCrypt.Net.BCrypt.EnhancedHashPassword(data.password.ToString())
         };
     }
-    
+
     public static User? Login(dynamic data, out CustomResponse? customResponse)
     {
         if (ParameterHandler.IsNull(data.email))
@@ -56,21 +56,21 @@ public abstract class UserRequest
             customResponse = new CustomResponse("error", "Email is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(data.password))
         {
             customResponse = new CustomResponse("error", "Password is null");
             return null;
         }
-        
+
         customResponse = null;
         return new User
         {
             Email = data.email,
-            Password = data.password,
+            Password = data.password
         };
     }
-    
+
     public static dynamic? AddLogger(dynamic data, out CustomResponse? customResponse)
     {
         if (ParameterHandler.IsNull(data.userId))
@@ -78,25 +78,25 @@ public abstract class UserRequest
             customResponse = new CustomResponse("error", "User id is null");
             return null;
         }
-        
-        if (ParameterHandler.IsNull(data.radonLoggerId))
+
+        if (ParameterHandler.IsNull(data.loggerId))
         {
             customResponse = new CustomResponse("error", "Logger id is null");
             return null;
         }
-        
-        if (ParameterHandler.IsNull(data.radonLoggerPassword))
+
+        if (ParameterHandler.IsNull(data.loggerPassword))
         {
             customResponse = new CustomResponse("error", "Logger password is null");
             return null;
         }
-        
+
         customResponse = null;
         return new
         {
             UserId = data.userId,
-            RadonLoggerId = data.radonLoggerId,
-            RadonLoggerPassword = data.radonLoggerPassword,
+            LoggerId = data.loggerId,
+            LoggerPassword = data.loggerPassword
         };
     }
 }

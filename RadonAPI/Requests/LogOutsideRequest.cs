@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using RadonAPI.Entities;
+﻿using RadonAPI.Entities;
 using RadonAPI.Models;
 using RadonAPI.Utils;
 
@@ -14,13 +13,13 @@ public abstract class LogOutsideRequest
             customResponse = new CustomResponse("error", "Temperature is null");
             return null;
         }
-        
+
         if (ParameterHandler.IsNull(body.humidity))
         {
             customResponse = new CustomResponse("error", "Humidity is null");
             return null;
         }
-        
+
         customResponse = null;
         return new LogOutside
         {

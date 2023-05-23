@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace RadonAPI.Entities;
 
-namespace RadonAPI.Entities;
-
-public partial class Log
+public class Log
 {
     public int Id { get; set; }
 
-    public int? RadonLoggerId { get; set; }
+    public string? LoggerId { get; set; }
 
-    public DateTime? Timestamp { get; set; }
+    public DateTime Timestamp { get; set; }
 
     public virtual ICollection<LogInside> LogInsides { get; set; } = new List<LogInside>();
 
