@@ -22,6 +22,7 @@ public class LogTests
         var body = new Dictionary<string, dynamic>
         {
             { "loggerId", "testid" },
+            { "loggerPassword", "testpassword" },
             { "timestamp", DateTime.Now },
             { "logOutside", JsonConvert.SerializeObject(logOutside) },
             { "logInside", JsonConvert.SerializeObject(logInside) }

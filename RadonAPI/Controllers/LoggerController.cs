@@ -12,22 +12,6 @@ namespace RadonAPI.Controllers;
 public class LoggerController : ControllerBase
 {
     private MyDbContext _context = new();
-
-    [HttpPost]
-    [Route(nameof(Create))]
-    public async Task<CustomResponse> Create()
-    {
-        CustomResponse? customResponse = null;
-        var logger = await BodyHandler.Convert<Logger>(Request.Body, d => LoggerRequest.Create(d, out customResponse));
-        if (customResponse is not null)
-            return customResponse;
-
-        await _context.Loggers.AddAsync(logger!);
-        await _context.SaveChangesAsync();
-
-        return new CustomResponse("success", "Logger created", logger);
-    }
-    
     
     [HttpPost]
     [Route(nameof(Read))]
@@ -46,6 +30,9 @@ public class LoggerController : ControllerBase
             return new CustomResponse("error", "Logger not found");
 
         var loggerDb = await loggers.FirstOrDefaultAsync();
+        
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(logger!.Password, loggerDb!.Password))
+            return new CustomResponse("error", "Logger password is incorrect");
 
         var logs = from l in _context.Logs
             where l.LoggerId == loggerDb.Id && l.Timestamp > DateTime.Now.AddDays(-1)

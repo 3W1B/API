@@ -7,61 +7,61 @@ namespace RadonAPI.Requests;
 
 public abstract class LogRequest
 {
-    public static Log? Create(dynamic body, out CustomResponse? customResponse, out LogInside? logInside,
-        out LogOutside? logOutside)
+    public static dynamic? Create(dynamic body, out CustomResponse? customResponse)
     {
         if (ParameterHandler.IsNull(body.loggerId))
         {
             customResponse = new CustomResponse("error", "Logger id is null");
-            logInside = null;
-            logOutside = null;
+            return null;
+        }
+        
+        if (ParameterHandler.IsNull(body.loggerPassword))
+        {
+            customResponse = new CustomResponse("error", "Logger password is null");
             return null;
         }
 
         if (ParameterHandler.IsNull(body.timestamp))
         {
             customResponse = new CustomResponse("error", "Timestamp is null");
-            logInside = null;
-            logOutside = null;
             return null;
         }
 
         if (ParameterHandler.IsNull(body.logInside))
         {
             customResponse = new CustomResponse("error", "Inside log is null");
-            logInside = null;
-            logOutside = null;
             return null;
         }
 
         if (ParameterHandler.IsNull(body.logOutside))
         {
             customResponse = new CustomResponse("error", "Outside log is null");
-            logInside = null;
-            logOutside = null;
             return null;
         }
 
-        logInside = LogInsideRequest.Create(JsonConvert.DeserializeObject(body.logInside.ToString()),
-            out customResponse);
+        var logInside = LogInsideRequest.Create(JsonConvert.DeserializeObject(body.logInside.ToString()), out customResponse);
         if (customResponse is not null)
-        {
-            logOutside = null;
             return null;
-        }
 
-        logOutside = LogOutsideRequest.Create(JsonConvert.DeserializeObject(body.logOutside.ToString()),
-            out customResponse);
+        var logOutside = LogOutsideRequest.Create(JsonConvert.DeserializeObject(body.logOutside.ToString()), out customResponse);
         if (customResponse is not null)
             return null;
 
         customResponse = null;
-        var log = new Log
+        
+        Log log = new()
         {
             LoggerId = body.loggerId.ToString(),
             Timestamp = body.timestamp
         };
+        
+        log.LogInsides.Add(logInside!);
+        log.LogOutsides.Add(logOutside!);
 
-        return log;
+        return new
+        {
+            Log = log,
+            LoggerPassword = body.loggerPassword.ToString()
+        };
     }
 }
