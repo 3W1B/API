@@ -15,7 +15,7 @@ export const stages = [
 ];
 
 export default function () {
-    const data = { id: "testid" };
+    const data = { id: "testid", password: "testpassword" };
     let res = http.post(`${__ENV.HOSTING}/logger/read`, JSON.stringify(data),
         {
             headers: { 'Content-Type': 'application/json' }
