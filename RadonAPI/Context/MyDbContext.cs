@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using RadonAPI.Entities;
 
 namespace RadonAPI.Context;
@@ -29,9 +31,8 @@ public partial class MyDbContext : DbContext
     public virtual DbSet<UserLogger> UserLoggers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https: //go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer(
-            "Server=radon3w1b.database.windows.net;database=radon3w1b;user id=radon3w1b@radon3w1b;password=P@ssword123++;trusted_connection=true;TrustServerCertificate=True;integrated security=false;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=radon3w1b.database.windows.net;database=radon3w1b;user id=radon3w1b@radon3w1b;password=P@ssword123++;trusted_connection=true;TrustServerCertificate=True;integrated security=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -75,8 +76,10 @@ public partial class MyDbContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Humidity).HasColumnName("humidity");
             entity.Property(e => e.LogId).HasColumnName("logId");
-            entity.Property(e => e.Radon).HasColumnName("radon");
+            entity.Property(e => e.RadonLta).HasColumnName("radonLta");
+            entity.Property(e => e.RadonSta).HasColumnName("radonSta");
             entity.Property(e => e.Temperature).HasColumnName("temperature");
+
         });
 
         modelBuilder.Entity<LogOutside>(entity =>
@@ -102,7 +105,7 @@ public partial class MyDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("id");
             entity.Property(e => e.Password)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("password");
         });
@@ -127,7 +130,7 @@ public partial class MyDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("lastName");
             entity.Property(e => e.Password)
-                .HasMaxLength(50)
+                .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("password");
             entity.Property(e => e.Phone)

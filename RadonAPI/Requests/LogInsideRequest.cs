@@ -20,9 +20,15 @@ public abstract class LogInsideRequest
             return null;
         }
 
-        if (ParameterHandler.IsNull(body.radon))
+        if (ParameterHandler.IsNull(body.radonLta))
         {
-            customResponse = new CustomResponse("error", "Radon is null");
+            customResponse = new CustomResponse("error", "Radon lta is null");
+            return null;
+        }
+        
+        if (ParameterHandler.IsNull(body.radonSta))
+        {
+            customResponse = new CustomResponse("error", "Radon sta is null");
             return null;
         }
 
@@ -31,7 +37,8 @@ public abstract class LogInsideRequest
         {
             Temperature = double.Parse(body.temperature.ToString()),
             Humidity = double.Parse(body.humidity.ToString()),
-            Radon = double.Parse(body.radon.ToString())
+            RadonLta = double.Parse(body.radonLta.ToString()),
+            RadonSta = double.Parse(body.radonSta.ToString())
         };
     }
 }
