@@ -17,7 +17,8 @@ public class LogTests
         {
             { "temperature", 1 },
             { "humidity", 1 },
-            { "radon", 1 }
+            { "radonLta", 1 },
+            { "radonSta", 1 }
         };
         var body = new Dictionary<string, dynamic>
         {

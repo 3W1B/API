@@ -1,6 +1,9 @@
-﻿namespace RadonAPI.Entities;
+﻿using System;
+using System.Collections.Generic;
 
-public class LogInside
+namespace RadonAPI.Entities;
+
+public partial class LogInside
 {
     public int Id { get; set; }
 
@@ -10,5 +13,7 @@ public class LogInside
 
     public double Humidity { get; set; }
 
-    public double Radon { get; set; }
+    public double RadonLta { get; set; }
+
+    public double RadonSta { get; set; }
 }

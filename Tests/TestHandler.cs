@@ -42,6 +42,6 @@ public abstract class TestHandler
         Console.WriteLine(response["status"]!.ToString());
         Console.WriteLine(response["message"]!.ToString());
         Console.WriteLine(response["data"]!.ToString()
-            .Substring(0, Math.Min(300, response["data"]!.ToString().Length)));
+            .Substring(0, Math.Min(500, response["data"]!.ToString().Length)));
     }
 }
