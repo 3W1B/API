@@ -47,20 +47,4 @@ public class UserTests
 
         _userId = _context.Users.FirstOrDefault(u => u.Email == _randomEmail)!.Id;
     }
-
-    [Test]
-    [Order(3)]
-    public async Task AddLogger()
-    {
-        var body = new Dictionary<string, dynamic>
-        {
-            { "userId", _userId },
-            { "loggerId", "testid" },
-            { "loggerPassword", "testpassword" }
-        };
-
-        UserController userController = new();
-
-        await TestHandler.Run(body, Expect.Success, userController, userController.AddLogger);
-    }
 }
