@@ -31,9 +31,6 @@ public class LoggerController : ControllerBase
 
         var loggerDb = await loggers.FirstOrDefaultAsync();
         
-        if (!BCrypt.Net.BCrypt.EnhancedVerify(logger!.Password, loggerDb!.Password))
-            return new CustomResponse("error", "Logger password is incorrect");
-
         var logs = from l in _context.Logs
             where l.LoggerId == loggerDb.Id && l.Timestamp > DateTime.Now.AddDays(-1)
             select l;

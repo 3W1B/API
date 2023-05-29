@@ -13,18 +13,11 @@ public abstract class LoggerRequest
             customResponse = new CustomResponse("error", "Logger id is null");
             return null;
         }
-        
-        if (ParameterHandler.IsNull(body.password))
-        {
-            customResponse = new CustomResponse("error", "Logger password is null");
-            return null;
-        }
 
         customResponse = null;
         return new Logger
         {
             Id = body.id.ToString(),
-            Password = body.password.ToString()
         };
     }
 }

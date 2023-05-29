@@ -10,7 +10,6 @@ public class LoggerTests
         var body = new Dictionary<string, dynamic>
         {
             { "id", "testid" },
-            { "password", "testpassword"}
         };
 
         LoggerController loggerController = new();
