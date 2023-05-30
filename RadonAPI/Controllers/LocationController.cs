@@ -7,7 +7,7 @@ using RadonAPI.Requests;
 namespace RadonAPI.Controllers;
 
 [ApiController]
-[Microsoft.AspNetCore.Components.Route("[controller]")]
+[Route("[controller]")]
 public class LocationController : ControllerBase
 {
     private readonly MyDbContext _context = new();
