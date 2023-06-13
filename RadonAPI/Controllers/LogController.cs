@@ -22,8 +22,10 @@ public class LogController : ControllerBase
             return customResponse;
 
         var dbLogger = await _context.Loggers.FindAsync(d!.Log.LoggerId);
+        if (dbLogger is null)
+            return new CustomResponse("error", "Logger not found");
         
-        if (!BCrypt.Net.BCrypt.EnhancedVerify(d.LoggerPassword, dbLogger!.Password))
+        if (!BCrypt.Net.BCrypt.EnhancedVerify(d.LoggerPassword, dbLogger.Password))
             return new CustomResponse("error", "Logger password is incorrect");
         
         await _context.Logs.AddAsync(d.Log);
